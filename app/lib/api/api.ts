@@ -46,7 +46,7 @@ const onError = (error : any)=>{
 
 
 const onGetToken = async()=>{
-    const token = (await cookies()).get("watch")?.value;
+    const token = (await cookies()).get("df")?.value;
     if(!token) throw new Error("Token not found");
     return token;
 }

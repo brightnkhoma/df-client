@@ -18,7 +18,7 @@ export async function login(data: any) {
       });
 
       response.cookies.set({
-        name: "watch",
+        name: "df",
         value: token,
         httpOnly: true,
         secure: false,
@@ -60,7 +60,7 @@ export const otp = async(data : any)=>{
         const response = NextResponse.json({ success: true, message:res.data.message || "Login success" });
 
         response.cookies.set({
-            name: "watch-otp-token",
+            name: "df-otp-token",
             value: token,
             httpOnly: true,
             secure: false,      
@@ -89,7 +89,7 @@ export const logout = async () => {
 }
 export const verifyotp = async (data: any) => {
   try {
-    const token = (await cookies()).get("watch-otp-token")?.value;
+    const token = (await cookies()).get("df-otp-token")?.value;
 
     const endpoint = `${mainPath}/auth/otp/verify`;
 

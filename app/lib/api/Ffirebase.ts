@@ -1,7 +1,7 @@
-import React, { SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Entity } from "../types/entity";
 import { RouterQuery } from "../types/routerQuery";
-import { collection, getCountFromServer, onSnapshot, query, where } from "firebase/firestore";
+import { collection, doc, getCountFromServer, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "./config/firebase";
 
 
@@ -37,9 +37,18 @@ export class Fbase{
             })
         })
         return unSubscribe;
-
-
     }
+
+    listestToDocument<T extends Entity>(path : string, setDoc : Dispatch<SetStateAction<T>>){
+        const _doc = doc(db,path);
+        const unSubscribe = onSnapshot(_doc,(change)=>{
+            if(change.exists()){
+                  const data = change.data() as T;
+                  setDoc(data)
+             }
+        })
+        return unSubscribe;
+        }
 
 
     async count<T extends Entity>(path : string,q : RouterQuery<T>){
